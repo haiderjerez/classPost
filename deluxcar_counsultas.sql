@@ -172,6 +172,43 @@ where e.nombre = 'Disponible'
   and v.precio between 5.000 and 90.000;
 
 
+-- Consulta: mostrar todos los vehiculos nuevos
+select v.marca,
+       v.modelo,
+       v.year_carro as year,
+       v.precio,
+       e.nombre as estado
+from vehiculos v
+join estado e on v.id_estados = e.id_estado
+where e.nombre = 'Nuevo';
+
+-- Consulta: mostrar todos los empleados que trabajan en el departamento de ventas
+select e.nombre as nombre_empleado,
+       e.apellido as apellido_empleado,
+       d.nombre as departamento
+from empleados e
+join departamento d on e.id_departamento = d.id_departamento
+where d.nombre = 'Ventas';
+
+-- Consulta: mostrar todos los servicios realizados por un empleado
+select s.descripcion,
+       s.fecha_servicio,
+       v.marca,
+       v.modelo
+from servicios s
+join vehiculos v on s.id_vehiculo = v.id_vehiculo
+where s.id_empleado = 2;
+
+-- Consulta: mostrar los clientes que tengan mas de 2 compras
+select c.nombre,
+          c.apellido,
+          count(v.id_venta) as compras_realizadas
+from clientes c 
+join ventas v on c.id_cliente = v.id_cliente 
+group by c.id_cliente
+having count(v.id_venta) > 2;
+
+
 
 select * from clientes;
 select * from clientespotenciales;
